@@ -1,0 +1,11 @@
+{
+  "name": "maaltafels",
+  "description": "Oefen maaltafels met opvolging.",
+  "website": "https://github.com/christophevg/maaltafels",
+
+  "addons" : [
+    "mongolab"
+  ],
+
+  "success_url": "/"
+}
