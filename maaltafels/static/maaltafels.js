@@ -84,7 +84,7 @@
       return this;
     };
     this.answer = function answer(given) {
-      this.answer_given = parseInt(given);
+      this.answer_given = parseInt(given) || null;
       this.stopped_at = new Date().getTime();
       return this;
     };
@@ -157,7 +157,6 @@
       report_failure(current);
     }
     session.asked.push(current);
-    ask_question();
   });
 
   // stop the test and show session results
@@ -181,7 +180,7 @@
     $("#dialog").addClass("success-dialog");
     $("#dialog .modal-title").html(title || "Super...");
     $("#dialog .modal-body").html(msg + "<br>Doen we er nog een?");
-    $("#dialog .btn.yes").show();
+    $("#dialog .btn.yes").show().click(function() { ask_question(); });
     $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
     $("#dialog").modal({backdrop: "static"});
   }
@@ -190,9 +189,9 @@
     $("#dialog").addClass("failure-dialog");
     $("#dialog .modal-title").html(title || "Ooops...");
     var msg = "<b>" + question.toString() + "</b> is <b>" + question.expected +
-              "</b>, niet <b>" + question.answer_given + "</b>!";
+              "</b>, niet <b>" + (question.answer_given || "niets") + "</b>!";
     $("#dialog .modal-body").html(msg + "<br>Doen we een andere?");
-    $("#dialog .btn.yes").show()
+    $("#dialog .btn.yes").show().click(function() { ask_question(); });
     $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
     $("#dialog").modal({backdrop: "static"});
   }
