@@ -1,3 +1,5 @@
+__version__ = "1"
+
 import os
 import logging
 
@@ -19,7 +21,7 @@ def render(template, **kwargs):
       '', 401, { 'WWW-Authenticate': 'Basic realm="maaltafels"' }
     )
   try:
-    return render_template(template + ".html", **kwargs)
+    return render_template(template + ".html", version=__version__, **kwargs)
   except TemplateNotFound:
     return render_template("404.html")
 
