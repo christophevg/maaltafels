@@ -131,13 +131,10 @@
   // add the digit value of the button to the answer "field"
   $("button.digit").click(function(event){
     digit = $(event.target).data("digit");
-    answer = $("div.answer").html();
-    if(answer == "&nbsp;") {
-      if(digit == 0 ) { return; } // skip leading zeroes
-      answer = "";
-    }
-    answer += digit;
-    $("div.answer").html(answer);
+    input = $("div.answer").html();
+    if(input == "&nbsp;" || input == 0) { input = ""; } // avoid leading 0
+    input += digit;
+    $("div.answer").html(input);
   });
 
   // perform a backspace, undoing the last entered digit
