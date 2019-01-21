@@ -30,7 +30,7 @@
       return $(this).data("choice");
     }).get();
     if( tables.length < 1) {
-      alert("Kies eerst 1 of meer tafels om te oefenen...");
+      report_error("Kies eerst 1 of meer tafels om te oefenen...");
       return;
     }
     release($("button.choice")); // clean up
@@ -163,6 +163,15 @@
     $("div#test").hide();
     $("div#selection").show()  
   });
+
+  // modal dialog helper functions
+
+  function report_error(msg, title) {
+    $("#dialog").addClass("error-dialog");
+    $("#dialog .modal-title").html(title || "Ooops...");
+    $("#dialog .modal-body").html(msg);
+    $("#dialog").modal({backdrop: "static"});
+  }
 
   // button helper functions
 

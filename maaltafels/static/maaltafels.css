@@ -59,3 +59,23 @@ DIV.actions BUTTON {
   width: 75px;
   margin: 15px;
 }
+
+.modal {
+  display: none;
+}
+
+.modal.is-open {
+  display: block;
+}
+
+.modal-body {
+  margin: 10px;
+}
+
+.error-dialog .modal-body {
+  background-image: url("/media/images/error.png");
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  height: 200px;
+  padding-right: 150px;
+}
