@@ -24,14 +24,18 @@
     }
   }
 
-  // collect choices, run the countdown and start the test
+  // collect tables, run the countdown and start the test
   $("button.start").click(function(){
-    var choices = $("button.choice .active").map(function(){
+    var tables = $("button.choice.active").map(function() {
       return $(this).data("choice");
     }).get();
+    if( tables.length < 1) {
+      alert("Kies eerst 1 of meer tafels om te oefenen...");
+      return;
+    }
     release($("button.choice")); // clean up
     $("div#selection").hide()
-    countdown(function() { test(choices); });
+    countdown(function() { test(tables); });
   });
 
   // View: countdown, counts down from 3 and starts the next action afterwards
@@ -54,10 +58,56 @@
 
   // View: test, generates exercise, accepts answer, gives feedback and reports
 
-  function test(choices) {
+  var session = {
+    "tables" : [],   // tables to choose from
+    "start"  : 0,    // session start
+    "asked"  : []    // questions asked
+  };
+  
+  var current = null; // current question
+
+  function question() {
+    this.t = session.tables[Math.floor(Math.random()*session.tables.length)];
+    this.d = Math.round(Math.random()*10);
+    this.e = this.t * this.d;
+    this.i = Math.random() >= 0.5;
+    this.operator     = Math.random() >= 0.5 ? "x" : ":";
+    this.left         = this.operator == ":" ? this.e : (this.i ? this.d : this.t);
+    this.right        = this.operator == ":" ? this.t : (this.i ? this.t : this.d);
+    this.expected     = this.operator == ":" ? this.d : this.e;
+    this.given_answer = null;
+    this.start = function start() {
+      this.started_at = new Date().getTime();
+      return this;
+    };
+    this.answer = function answer(given) {
+      this.given_answer = parseInt(given);
+      this.stopped_at = new Date().getTime();
+      return this;
+    };
+    this.is_correct = function is_correct() {
+      return this.given_answer === this.expected;
+    };
+  };
+
+  function test(tables) {
     $("div.answer").html("&nbsp;");
     $("div#test").show();
-    console.log("testing", choices);
+    session.tables = tables;
+    ask_question();
+  }
+
+  // given a random table (t) and random digit (d), valid questions are:
+  // t * d = e
+  // d * t = e (inverted)
+  // e : t = d
+  function ask_question() {
+    current = new question();
+    $("DIV.left.argument").html(current.left);
+    $("DIV.operator").html(current.operator);
+    $("DIV.right.argument").html(current.right);
+    $("DIV.answer").html("&nbsp;");
+    current.start();
   }
 
   // accept 0-9, escape, backspace and enter/return and trigger the 
@@ -81,13 +131,13 @@
   // add the digit value of the button to the answer "field"
   $("button.digit").click(function(event){
     digit = $(event.target).data("digit");
-    current = $("div.answer").html();
-    if(current == "&nbsp;") {
+    answer = $("div.answer").html();
+    if(answer == "&nbsp;") {
       if(digit == 0 ) { return; } // skip leading zeroes
-      current = "";
+      answer = "";
     }
-    current += digit;
-    $("div.answer").html(current);
+    answer += digit;
+    $("div.answer").html(answer);
   });
 
   // perform a backspace, undoing the last entered digit
@@ -101,11 +151,18 @@
 
   // submit the answer
   $("button.ok").click(function(){
-    // TODO: check answer, show result
+    if(current.answer($("div.answer").html()).is_correct()) {
+      alert("super");
+    } else {
+      alert("oops!");
+    }
+    session.asked.push(current);
+    ask_question();
   });
 
   // stop the test and show session results
   $("button.stop").click(function(){
+    console.log(session);
     $("div#test").hide();
     $("div#selection").show()  
   });

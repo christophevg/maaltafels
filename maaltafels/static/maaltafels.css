@@ -50,9 +50,9 @@ DIV.question DIV {
   font-size: 24pt;
 }
 
-DIV.result {
+DIV.answer {
   background-color: #f8f9fa;
-  text-align: right;
+  text-align: center;
 }
 
 DIV.actions BUTTON {
