@@ -68,6 +68,7 @@ DIV.actions BUTTON {
 
 .modal-footer button {
   display: none;
+  width: 75px;
 }
 
 .error-dialog .modal-body {
