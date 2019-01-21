@@ -142,11 +142,11 @@
 
   // perform a backspace, undoing the last entered digit
   $("button.undo").click(function() {
-    current = $("div.answer").html();
-    if(current == "&nbsp;") { return; }
-    current = current.substring(0, current.length-1);
-    if(current == "") { current = "&nbsp;" }
-    $("div.answer").html(current);
+    input = $("div.answer").html();
+    if(input == "&nbsp;") { return; }
+    input = input.substring(0, input.length-1);
+    if(input == "") { input = "&nbsp;" } // set filler
+    $("div.answer").html(input);
   });
 
   // submit the answer
