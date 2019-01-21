@@ -4,8 +4,10 @@
   // keyboard input
   document.addEventListener("keydown", keyDownTextField, false);
   function keyDownTextField(e) {
-    handle_selection_keypress(e.keyCode);
-    handle_test_keypress(e.keyCode);
+    if( ! handle_dialog_keypress(e.keyCode) ) {
+      handle_selection_keypress(e.keyCode);
+      handle_test_keypress(e.keyCode);
+    }
   }
 
   // View: selection, allows for selecting which multiplication tables to 
@@ -173,7 +175,7 @@
     $("#dialog .modal-title").html(title || "Ooops...");
     $("#dialog .modal-body").html(msg);
     $("#dialog .btn.ok").show();
-    $("#dialog").modal({backdrop: "static"});
+    $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
   function report_success(msg, title) {
@@ -182,7 +184,7 @@
     $("#dialog .modal-body").html(msg + "<br>Doen we er nog een?");
     $("#dialog .btn.yes").show().click(function() { ask_question(); });
     $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
-    $("#dialog").modal({backdrop: "static"});
+    $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
   function report_failure(question, title) {
@@ -193,7 +195,7 @@
     $("#dialog .modal-body").html(msg + "<br>Doen we een andere?");
     $("#dialog .btn.yes").show().click(function() { ask_question(); });
     $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
-    $("#dialog").modal({backdrop: "static"});
+    $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
   $("#dialog").on("hidden.bs.modal", function (e) {
@@ -204,6 +206,19 @@
     ]);
     $("#dialog .modal-footer button").hide();
   })
+
+  // accept enter/return to handle default ok/yes button
+  function handle_dialog_keypress(keyCode) {
+    if($("#dialog").is(":hidden")) { return false; }
+    if(keyCode == 13) { // enter
+      if($("dialog .error-dialog").is(":visible")) {
+        click( $("#dialog .btn.ok"));
+      } else {
+        click( $("#dialog .btn.yes"));
+      }
+    }
+    return true;
+  }
 
   // button helper functions
 
