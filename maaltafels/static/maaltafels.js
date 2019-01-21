@@ -75,18 +75,21 @@
     this.left         = this.operator == ":" ? this.e : (this.i ? this.d : this.t);
     this.right        = this.operator == ":" ? this.t : (this.i ? this.t : this.d);
     this.expected     = this.operator == ":" ? this.d : this.e;
-    this.given_answer = null;
+    this.answer_given = null;
+    this.toString = function toString() {
+      return this.left + " " + this.operator + " " + this.right;
+    };
     this.start = function start() {
       this.started_at = new Date().getTime();
       return this;
     };
     this.answer = function answer(given) {
-      this.given_answer = parseInt(given);
+      this.answer_given = parseInt(given);
       this.stopped_at = new Date().getTime();
       return this;
     };
     this.is_correct = function is_correct() {
-      return this.given_answer === this.expected;
+      return this.answer_given === this.expected;
     };
   };
 
@@ -129,7 +132,7 @@
   }
 
   // add the digit value of the button to the answer "field"
-  $("button.digit").click(function(event){
+  $("#test button.digit").click(function(event){
     digit = $(event.target).data("digit");
     input = $("div.answer").html();
     if(input == "&nbsp;" || input == 0) { input = ""; } // avoid leading 0
@@ -138,7 +141,7 @@
   });
 
   // perform a backspace, undoing the last entered digit
-  $("button.undo").click(function() {
+  $("#test button.undo").click(function() {
     input = $("div.answer").html();
     if(input == "&nbsp;") { return; }
     input = input.substring(0, input.length-1);
@@ -147,11 +150,11 @@
   });
 
   // submit the answer
-  $("button.ok").click(function(){
+  $("#test button.ok").click(function(){
     if(current.answer($("div.answer").html()).is_correct()) {
-      alert("super");
+      report_success("Dat heb je prima gedaan.")
     } else {
-      alert("oops!");
+      report_failure(current);
     }
     session.asked.push(current);
     ask_question();
@@ -170,8 +173,38 @@
     $("#dialog").addClass("error-dialog");
     $("#dialog .modal-title").html(title || "Ooops...");
     $("#dialog .modal-body").html(msg);
+    $("#dialog .btn.ok").show();
     $("#dialog").modal({backdrop: "static"});
   }
+
+  function report_success(msg, title) {
+    $("#dialog").addClass("success-dialog");
+    $("#dialog .modal-title").html(title || "Super...");
+    $("#dialog .modal-body").html(msg + "<br>Doen we er nog een?");
+    $("#dialog .btn.yes").show();
+    $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
+    $("#dialog").modal({backdrop: "static"});
+  }
+
+  function report_failure(question, title) {
+    $("#dialog").addClass("failure-dialog");
+    $("#dialog .modal-title").html(title || "Ooops...");
+    var msg = "<b>" + question.toString() + "</b> is <b>" + question.expected +
+              "</b>, niet <b>" + question.answer_given + "</b>!";
+    $("#dialog .modal-body").html(msg + "<br>Doen we een andere?");
+    $("#dialog .btn.yes").show()
+    $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
+    $("#dialog").modal({backdrop: "static"});
+  }
+
+  $("#dialog").on("hidden.bs.modal", function (e) {
+    $("#dialog").removeClass([
+      "success-dialog",
+      "error-dialog",
+      "failure-dialog"
+    ]);
+    $("#dialog .modal-footer button").hide();
+  })
 
   // button helper functions
 
