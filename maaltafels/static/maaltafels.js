@@ -160,7 +160,7 @@
     }
     session.asked.push(current);
     publish_result({
-      "config"   : [ current.t, current.d, current.e, current.i ],
+      "config"   : [ current.t, current.d, current.operator, current.i ],
       "question" : current.left + current.operator + current.right,
       "expected" : current.expected,
       "answer"   : current.answer_given,
