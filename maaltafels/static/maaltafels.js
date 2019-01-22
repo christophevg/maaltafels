@@ -159,6 +159,13 @@
       report_failure(current);
     }
     session.asked.push(current);
+    publish_result({
+      "config"   : [ current.t, current.d, current.e, current.i ],
+      "question" : current.left + current.operator + current.right,
+      "expected" : current.expected,
+      "answer"   : current.answer_given,
+      "time"     : current.stopped_at - current.started_at
+    });
   });
 
   // stop the test and show session results
@@ -167,6 +174,24 @@
     $("div#test").hide();
     $("div#selection").show()  
   });
+
+  // AJAX helper function
+
+  function publish_result(question) {
+    $.ajax( {
+      url: "/api/results",
+      type: "post",
+      data: JSON.stringify(question),
+      dataType: "json",
+      contentType: "application/json",
+      success: function(response) {
+        console.log("published", question);
+      },
+      error: function(response) {
+        console.log("failed to publish", question, response);
+      }
+    });
+  }
 
   // modal dialog helper functions
 
