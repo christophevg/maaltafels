@@ -20,14 +20,13 @@ server = Flask(__name__, static_url_path="/media")
 
 def authenticated(f):
   @wraps(f)
-  def wrapper(self=None):
+  def wrapper(*args, **kwargs):
     auth = request.authorization
     if not auth or auth.username != USER or auth.password != PASS:
       return Response(
         '', 401, { 'WWW-Authenticate': 'Basic realm="maaltafels"' }
       )
-    if self: return f(self)
-    return f()
+    return f(*args, **kwargs)
   return wrapper
 
 import maaltafels.ui
