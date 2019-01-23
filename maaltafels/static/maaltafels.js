@@ -86,7 +86,7 @@
       return this;
     };
     this.answer = function answer(given) {
-      this.answer_given = parseInt(given) || null;
+      this.answer_given = isNaN(given) ? null : parseInt(given);
       this.stopped_at = new Date().getTime();
       return this;
     };
@@ -215,8 +215,9 @@
   function report_failure(question, title) {
     $("#dialog").addClass("failure-dialog");
     $("#dialog .modal-title").html(title || "Ooops...");
-    var msg = "<b>" + question.toString() + "</b> is <b>" + question.expected +
-              "</b>, niet <b>" + (question.answer_given || "niets") + "</b>!";
+    var answer = question.answer_given === null ? "niets" : question.answer_given,
+        msg = "<b>" + question.toString() + "</b> is <b>" + question.expected +
+              "</b>, niet <b>" + answer + "</b>!";
     $("#dialog .modal-body").html(msg + "<br>Doen we een andere?");
     $("#dialog .btn.yes").show().click(function() { ask_question(); });
     $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
