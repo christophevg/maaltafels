@@ -37,7 +37,7 @@
     }
     release($("button.choice")); // clean up
     $("div#selection").hide()
-    countdown(function() { test(tables); });
+    start_session(tables);
   });
 
   // View: countdown, counts down from 3 and starts the next action afterwards
@@ -61,13 +61,46 @@
   // View: test, generates exercise, accepts answer, gives feedback and reports
 
   var session = {
+    "id"     : null, // unique reference for the current session
     "tables" : [],   // tables to choose from
-    "start"  : 0,    // session start
+    "start"  : 0,    // started at
+    "end"    : 0,    // ended at
     "asked"  : []    // questions asked
   };
   
   var current = null; // current question
 
+  function start_session(tables) {
+    session.tables = tables;
+    session.start  = new Date();
+    post("sessions", {
+      "start"  : session.start,
+      "tables" : session.tables
+    }, function(response) { 
+      session.id = response;
+      console.log("session started with id " + session.id)
+    });
+    countdown(function() {
+      $("div.answer").html("&nbsp;");
+      $("div#test").show();
+      ask_question();
+    });
+  }
+
+  function ask_question() {
+    current = new question();
+    $("DIV.left.argument").html(current.left);
+    $("DIV.operator").html(current.operator);
+    $("DIV.right.argument").html(current.right);
+    $("DIV.answer").html("&nbsp;");
+    current.start();
+  }
+
+  // question prototype
+  // given a random table (t) and random digit (d), valid questions are:
+  // t * d = e
+  // d * t = e (inverted)
+  // e : t = d
   function question() {
     this.t = session.tables[Math.floor(Math.random()*session.tables.length)];
     this.d = Math.round(Math.random()*10);
@@ -94,26 +127,6 @@
       return this.answer_given === this.expected;
     };
   };
-
-  function test(tables) {
-    $("div.answer").html("&nbsp;");
-    $("div#test").show();
-    session.tables = tables;
-    ask_question();
-  }
-
-  // given a random table (t) and random digit (d), valid questions are:
-  // t * d = e
-  // d * t = e (inverted)
-  // e : t = d
-  function ask_question() {
-    current = new question();
-    $("DIV.left.argument").html(current.left);
-    $("DIV.operator").html(current.operator);
-    $("DIV.right.argument").html(current.right);
-    $("DIV.answer").html("&nbsp;");
-    current.start();
-  }
 
   // accept 0-9, escape, backspace and enter/return and trigger the 
   // corresponding buttons
@@ -154,41 +167,53 @@
   // submit the answer
   $("#test button.ok").click(function(){
     if(current.answer($("div.answer").html()).is_correct()) {
-      report_success("Dat heb je prima gedaan.")
+      report_success("Dat heb je prima gedaan.");
     } else {
       report_failure(current);
     }
     session.asked.push(current);
-    publish_result({
+    post("results", {
       "config"   : [ current.t, current.d, current.operator, current.i ],
       "question" : current.left + current.operator + current.right,
       "expected" : current.expected,
       "answer"   : current.answer_given,
-      "time"     : current.stopped_at - current.started_at
+      "time"     : current.stopped_at - current.started_at,
+      "session"  : session.id
     });
   });
 
-  // stop the test and show session results
+  // stop the test and log session results
   $("button.stop").click(function(){
-    console.log(session);
+    put("sessions/"+session.id, {
+      "end": new Date()
+    });
     $("div#test").hide();
     $("div#selection").show()  
   });
 
   // AJAX helper function
 
-  function publish_result(question) {
+  function put(resource, doc, callback) {
+    ajax("put", resource, doc, callback);
+  }
+  
+  function post(resource, doc, callback) {
+    ajax("post", resource, doc, callback);
+  }
+  
+  function ajax(type, resource, doc, callback) {
     $.ajax( {
-      url: "/api/results",
-      type: "post",
-      data: JSON.stringify(question),
+      url: "/api/" + resource,
+      type: type,
+      data: JSON.stringify(doc),
       dataType: "json",
       contentType: "application/json",
       success: function(response) {
-        console.log("published", question);
+        // console.log("posted", resource, doc, response);
+        if(callback) { callback(response); }
       },
       error: function(response) {
-        console.log("failed to publish", question, response);
+        console.log("failed to post", resource, doc, response);
       }
     });
   }
