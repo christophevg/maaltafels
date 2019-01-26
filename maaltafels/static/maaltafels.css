@@ -79,6 +79,14 @@ DIV.actions BUTTON {
   padding-right: 150px;
 }
 
+.update-dialog .modal-body {
+  background-image: url("/media/images/update.png");
+  background-position: left bottom;
+  background-repeat: no-repeat;
+  height: 200px;
+  padding-left: 225px;
+}
+
 .success-dialog .modal-body {
   background-image: url("/media/images/success.png");
   background-position: right bottom;

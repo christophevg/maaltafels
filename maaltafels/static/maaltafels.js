@@ -95,6 +95,14 @@
     });
     $("div#test").hide();
     $("div#selection").show();
+    setTimeout(check_version, 500); // FIXME: race condition when closing dialog
+  }
+
+  // check for updated version on sever
+  function check_version() {
+    $.getJSON( "/api/version", function(data) {
+      if(__version__ != data) { report_update(); }
+    });
   }
 
   function ask_question() {
@@ -232,6 +240,14 @@
     $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
+  function report_update() {
+    $("#dialog").addClass("update-dialog");
+    $("#dialog .modal-title").html("Nieuw !!!");
+    $("#dialog .modal-body").html("Je app is verbetered. Klaar voor wat nieuws?");
+    $("#dialog .btn.ok").show().click( function() { window.location.reload(true); } );
+    $("#dialog").modal({backdrop: "static", keyboard: false});
+  }
+
   function report_success(msg, title) {
     $("#dialog").addClass("success-dialog");
     $("#dialog .modal-title").html(title || "Super...");
@@ -255,6 +271,7 @@
 
   $("#dialog").on("hidden.bs.modal", function (e) {
     $("#dialog").removeClass([
+      "update-dialog",
       "success-dialog",
       "error-dialog",
       "failure-dialog"
