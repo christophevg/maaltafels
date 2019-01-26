@@ -7,7 +7,7 @@ from flask import request
 import flask_restful
 from flask_restful import Resource
 
-from maaltafels import server, authenticated, db
+from maaltafels import __version__, server, authenticated, db
 
 api = flask_restful.Api(server)
 
@@ -39,4 +39,13 @@ class Sessions(Resource):
 api.add_resource(Sessions,
   "/api/sessions",
   "/api/sessions/<string:id>"
+)
+
+class Version(Resource):
+  @authenticated
+  def get(self):
+    return __version__
+
+api.add_resource(Version,
+  "/api/version"
 )
