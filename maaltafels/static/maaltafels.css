@@ -60,6 +60,11 @@ DIV.actions BUTTON {
   margin: 15px;
 }
 
+DIV#feedback {
+  display: none;
+  text-align: center;
+}
+
 /* dialog support */
 
 .modal-body {

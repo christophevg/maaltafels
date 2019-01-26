@@ -7,11 +7,24 @@
     if( ! handle_dialog_keypress(e.keyCode) ) {
       handle_selection_keypress(e.keyCode);
       handle_test_keypress(e.keyCode);
+      handle_feedback_keypress(e.keyCode);
     }
   }
 
   // View: selection, allows for selecting which multiplication tables to 
   //       include in the test
+
+  function show_selection() {
+    $("div#selection").show();
+    check_version();
+  }
+
+  // check for updated version on sever
+  function check_version() {
+    $.getJSON( "/api/version", function(data) {
+      if(__version__ != data) { report_update(); }
+    });
+  }
 
   // accept 0-9 and enter/return and trigger the corresponding buttons
   function handle_selection_keypress(keyCode) {
@@ -65,7 +78,9 @@
     "tables" : [],   // tables to choose from
     "start"  : 0,    // started at
     "end"    : 0,    // ended at
-    "asked"  : []    // questions asked
+    "asked"  : [],   // questions asked
+    "correct": 0,    // correct questions
+    "time"   : 0     // total (active) time
   };
   
   var current = null; // current question
@@ -91,18 +106,40 @@
 
   function end_session() {
     put("sessions/"+session.id, {
+      "correct": session.correct,
+      "total": session.asked.length,
+      "time": session.time,
       "end": new Date()
     });
     $("div#test").hide();
-    $("div#selection").show();
-    setTimeout(check_version, 500); // FIXME: race condition when closing dialog
+    show_feedback();
   }
-
-  // check for updated version on sever
-  function check_version() {
-    $.getJSON( "/api/version", function(data) {
-      if(__version__ != data) { report_update(); }
-    });
+  
+  // View: feedback
+  
+  function show_feedback() {
+    $("#feedback .total").html(session.asked.length);
+    $("#feedback .correct").html(session.correct);
+    $("#feedback .average").html(
+      Math.round(session.time / session.asked.length /100)/10
+    );
+    $("#feedback").show();    
+  }
+  
+  $("#feedback button.ok").click(function(){
+    $("#feedback").hide();
+    show_selection();
+  });
+  
+  // enter/return and trigger the corresponding button
+  function handle_feedback_keypress(keyCode) {
+    if($("#feedback").is(":hidden")) { return; }
+    if(keyCode == 13) { // enter / ok
+      button = $("#feedback button.ok");
+    } else {
+      return;
+    }
+    click(button);
   }
 
   function ask_question() {
@@ -129,6 +166,7 @@
     this.right        = this.operator == ":" ? this.t : (this.i ? this.t : this.d);
     this.expected     = this.operator == ":" ? this.d : this.e;
     this.answer_given = null;
+    this.time         = 0;
     this.toString = function toString() {
       return this.left + " " + this.operator + " " + this.right;
     };
@@ -139,6 +177,7 @@
     this.answer = function answer(given) {
       this.answer_given = isNaN(given) ? null : parseInt(given);
       this.stopped_at = new Date().getTime();
+      this.time = this.stopped_at - this.started_at;
       return this;
     };
     this.is_correct = function is_correct() {
@@ -151,13 +190,13 @@
   function handle_test_keypress(keyCode) {
     if($("div#test").is(":hidden")) { return; }
     if(keyCode >= "0".charCodeAt() && keyCode <= "9".charCodeAt()) {
-      button = $("button.digit." + String.fromCharCode(keyCode));
+      button = $("#test button.digit." + String.fromCharCode(keyCode));
     } else if(keyCode == 8) {  // backspace / undo
-      button = $("button.undo");
+      button = $("#test button.undo");
     } else if(keyCode == 13) { // enter / ok
-      button = $("button.ok");
+      button = $("#test button.ok");
     } else if(keyCode == 27) { // esc / stop
-      button = $("button.stop");
+      button = $("#test button.stop");
     } else {
       return;
     }
@@ -185,17 +224,19 @@
   // submit the answer
   $("#test button.ok").click(function(){
     if(current.answer($("div.answer").html()).is_correct()) {
+      session.correct++;
       report_success("Dat heb je prima gedaan.");
     } else {
       report_failure(current);
     }
     session.asked.push(current);
+    session.time += current.time;
     post("results", {
       "config"   : [ current.t, current.d, current.operator, current.i ],
       "question" : current.left + current.operator + current.right,
       "expected" : current.expected,
       "answer"   : current.answer_given,
-      "time"     : current.stopped_at - current.started_at,
+      "time"     : current.time,
       "session"  : session.id
     });
   });
