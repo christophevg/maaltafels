@@ -89,6 +89,14 @@
     });
   }
 
+  function end_session() {
+    put("sessions/"+session.id, {
+      "end": new Date()
+    });
+    $("div#test").hide();
+    $("div#selection").show();
+  }
+
   function ask_question() {
     current = new question();
     $("DIV.left.argument").html(current.left);
@@ -185,13 +193,7 @@
   });
 
   // stop the test and log session results
-  $("button.stop").click(function(){
-    put("sessions/"+session.id, {
-      "end": new Date()
-    });
-    $("div#test").hide();
-    $("div#selection").show()  
-  });
+  $("button.stop").click(end_session);
 
   // AJAX helper function
 
@@ -234,8 +236,8 @@
     $("#dialog").addClass("success-dialog");
     $("#dialog .modal-title").html(title || "Super...");
     $("#dialog .modal-body").html(msg + "<br>Doen we er nog een?");
-    $("#dialog .btn.yes").show().click(function() { ask_question(); });
-    $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
+    $("#dialog .btn.yes").show().click( ask_question );
+    $("#dialog .btn.no").show().click( end_session );
     $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
@@ -246,8 +248,8 @@
         msg = "<b>" + question.toString() + "</b> is <b>" + question.expected +
               "</b>, niet <b>" + answer + "</b>!";
     $("#dialog .modal-body").html(msg + "<br>Doen we een andere?");
-    $("#dialog .btn.yes").show().click(function() { ask_question(); });
-    $("#dialog .btn.no").show().click(function() { click($("button.stop")); });
+    $("#dialog .btn.yes").show().click( ask_question );
+    $("#dialog .btn.no").show().click( end_session );
     $("#dialog").modal({backdrop: "static", keyboard: false});
   }
 
