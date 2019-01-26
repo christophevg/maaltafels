@@ -73,6 +73,8 @@
   function start_session(tables) {
     session.tables = tables;
     session.start  = new Date();
+    session.end    = 0;
+    session.asked  = [];
     post("sessions", {
       "start"  : session.start,
       "tables" : session.tables
