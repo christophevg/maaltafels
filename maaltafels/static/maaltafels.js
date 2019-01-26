@@ -259,6 +259,8 @@
       "error-dialog",
       "failure-dialog"
     ]);
+    $("#dialog .modal-title").html("");
+    $("#dialog .modal-body").html("");
     $("#dialog .modal-footer button").hide().unbind("click");
   })
 
