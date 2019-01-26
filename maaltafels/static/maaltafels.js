@@ -255,7 +255,7 @@
       "error-dialog",
       "failure-dialog"
     ]);
-    $("#dialog .modal-footer button").hide();
+    $("#dialog .modal-footer button").hide().unbind("click");
   })
 
   // accept enter/return to handle default ok/yes button
