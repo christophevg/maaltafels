@@ -127,7 +127,13 @@
     $("#feedback").show();
   }
   
+  var chart = null;
+
   function render_evolution() {
+    if(chart != null) {
+      chart.destroy();
+      chart = null;
+    }
     $.getJSON( "/api/results", function(data) {
       data.reverse();
       var labels=[], wrong=[], correct=[], times=[];
@@ -139,7 +145,7 @@
         times.push(Math.round(data[i].time/100)/10);
       }
       var ctx = document.getElementById("evolution").getContext('2d');
-      new Chart(ctx, {
+      chart = new Chart(ctx, {
         type: "bar",
         data: {
           labels: labels,
