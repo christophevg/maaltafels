@@ -2,14 +2,38 @@ import datetime
 
 from bson.objectid import ObjectId
 
-from flask import request
+from flask import request, json, make_response
+from flask.json import JSONEncoder
 
 import flask_restful
 from flask_restful import Resource
 
 from maaltafels import __version__, server, authenticated, db
 
+# customize the Flask Json encoder with support for datetime.date
+class CustomJSONEncoder(JSONEncoder):
+  def default(self, obj):
+    try:
+      if isinstance(obj, datetime.date):
+        return obj.isoformat()
+      iterable = iter(obj)
+    except TypeError:
+      pass
+    else:
+      return list(iterable)
+    return JSONEncoder.default(self, obj)
+
+server.json_encoder = CustomJSONEncoder
+
 api = flask_restful.Api(server)
+
+# override the default Flask Restful JSON encoding, and use the customized Flask
+@api.representation("application/json")
+def output_json(data, code, headers=None):
+  resp = make_response(json.dumps(data), code)
+  resp.headers.extend(headers or {})
+  return resp
+
 
 class Results(Resource):
   @authenticated
