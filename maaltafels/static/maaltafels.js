@@ -129,6 +129,7 @@
   
   function render_evolution() {
     $.getJSON( "/api/results", function(data) {
+      data.reverse();
       var labels=[], wrong=[], correct=[], times=[];
       for(var i in data) {
         var d = new Date(data[i]._id);
