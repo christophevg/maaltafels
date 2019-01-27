@@ -37,6 +37,41 @@ def output_json(data, code, headers=None):
 
 class Results(Resource):
   @authenticated
+  def get(self):
+    return [result for result in db.results.aggregate([
+      {
+        "$project": {
+          "year"      : { "$year"      : "$_ts" },
+          "month"     : { "$month"     : "$_ts" },
+          "dayOfMonth": { "$dayOfMonth": "$_ts" },
+          "correct"   : { "$eq": [ "$answer", "$expected" ] },
+          "time"      : "$time",
+        }
+      },
+      {
+        "$group": {
+          "_id": {
+            "$dateFromParts" : {
+              "year" : "$year",
+              "month": "$month",
+              "day"  : "$dayOfMonth"
+            }
+          },
+          "questions": { "$sum": 1 },
+          "correct"  : { "$sum": { "$cond": [ "$correct", 1, 0 ] } },
+          "time"     : { "$avg": "$time" }
+        }
+      },
+      {
+        "$sort": { "_id": -1 }
+      },
+      {
+        "$limit": 7
+      }
+    ])
+  ]
+
+  @authenticated
   def post(self):
     result = request.get_json()
     result["_ts"] = datetime.datetime.utcnow()
