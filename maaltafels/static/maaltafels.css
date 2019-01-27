@@ -65,6 +65,13 @@ DIV#feedback {
   text-align: center;
 }
 
+DIV#feedback DIV.evolution {
+  display: inline-block;
+  width: 700px;
+  height: 400px;
+  text-align: center;
+}
+
 /* dialog support */
 
 .modal-body {

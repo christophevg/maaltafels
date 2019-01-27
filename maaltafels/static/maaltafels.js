@@ -123,9 +123,81 @@
     $("#feedback .average").html(
       Math.round(session.time / session.asked.length /100)/10
     );
-    $("#feedback").show();    
+    render_evolution();
+    $("#feedback").show();
   }
   
+  function render_evolution() {
+    $.getJSON( "/api/results", function(data) {
+      var labels=[], wrong=[], correct=[], times=[];
+      for(var i in data) {
+        var d = new Date(data[i]._id);
+        labels.push(d.getDate()+"/"+d.getMonth()+1);
+        wrong.push(data[i].questions-data[i].correct);
+        correct.push(data[i].correct);
+        times.push(Math.round(data[i].time/100)/10);
+      }
+      var ctx = document.getElementById("evolution").getContext('2d');
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "tijd",
+              data: times,
+              borderWidth: 3,
+              yAxisID: "time",
+              xAxisId: "time",
+              type: "line",
+              fill: false,
+              borderColor: "#aaaaff",
+              backgroundColor: "#aaaaff"
+            },
+            {
+              label: "correct",
+              data: correct,
+              borderWidth: 1,
+              backgroundColor: "#aaffaa"
+            },
+            {
+              label: "fout",
+              data: wrong,
+              borderWidth: 1,
+              backgroundColor: "#ffaaaa"
+            }
+          ]
+        },
+        options: {
+          scales: {
+            xAxes: [
+              {
+                stacked: true
+              },
+              {
+                id: "time",
+                stacked: false
+              }
+            ],
+            yAxes: [
+              {
+                type: "linear",
+                beginAtZero: true,
+                stacked: true
+              }, {
+                id: "time",
+                type: "linear",
+                position: "right",
+                beginAtZero: true,
+                min: 0
+              }
+            ]
+          }
+        }
+      });
+    });
+  }
+
   $("#feedback button.ok").click(function(){
     $("#feedback").hide();
     show_selection();
