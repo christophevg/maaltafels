@@ -1,0 +1,20 @@
+{% extends "main.html" %}
+{% block content %}
+
+  <h1>Recent</h1>
+  <div class="chart evolution">
+    <canvas id="evolution" width="200" height="100"></canvas>
+  </div>
+
+  <h1>Dekking</h1>
+  <div class="chart coverage">
+    <canvas id="coverage_m" width="200" height="100"></canvas>  
+  </div>
+  <div class="chart coverage">
+    <canvas id="coverage_d" width="200" height="100"></canvas>  
+  </div>
+
+{% endblock %}
+{% block more_js %}
+  <script src="/media/report.js?{{ version }}"></script>
+{% endblock %}

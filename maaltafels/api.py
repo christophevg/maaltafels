@@ -68,8 +68,7 @@ class Results(Resource):
       {
         "$limit": 7
       }
-    ])
-  ]
+    ])]
 
   @authenticated
   def post(self):
@@ -107,4 +106,21 @@ class Version(Resource):
 
 api.add_resource(Version,
   "/api/version"
+)
+
+class Coverage(Resource):
+  @authenticated
+  def get(self):
+    return [ question for question in db.results.aggregate([
+      {
+        "$group" : {
+          "_id" : "$config",
+          "total": { "$sum" : 1 },
+          "correct": { "$sum": { "$cond": [ { "$eq": [ "$answer", "$expected" ] }, 1, 0 ] } }
+        }
+      }
+    ])]
+
+api.add_resource(Coverage,
+  "/api/coverage"
 )

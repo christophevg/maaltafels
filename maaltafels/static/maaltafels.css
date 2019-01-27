@@ -15,7 +15,8 @@ html, body {
 }
 
 DIV#app {
-  margin: 50px;
+  margin-left: 50px;
+  margin-right: 50px;
 }
 
 BUTTON.choice {
@@ -65,7 +66,6 @@ DIV#feedback {
   text-align: center;
 }
 
-DIV#feedback DIV.evolution {
 DIV#feedback DIV.results {
   font-size: 18pt;
   margin-bottom: 25px;
@@ -75,9 +75,15 @@ DIV#feedback DIV.results SPAN {
   font-weight: bold;
 }
 
+DIV.chart {
   display: inline-block;
-  width: 700px;
-  height: 400px;
+  width: 800px;
+  text-align: center;
+}
+
+DIV.chart.coverage {
+  display: inline-block;
+  width: 500px;
   text-align: center;
 }
 

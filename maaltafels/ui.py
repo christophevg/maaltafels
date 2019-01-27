@@ -13,3 +13,8 @@ def render(template, **kwargs):
 @authenticated
 def render_home():
   return render("index")
+
+@server.route("/report")
+@authenticated
+def render_report():
+  return render("report")
