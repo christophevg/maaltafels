@@ -66,6 +66,15 @@ DIV#feedback {
 }
 
 DIV#feedback DIV.evolution {
+DIV#feedback DIV.results {
+  font-size: 18pt;
+  margin-bottom: 25px;
+}
+
+DIV#feedback DIV.results SPAN {
+  font-weight: bold;
+}
+
   display: inline-block;
   width: 700px;
   height: 400px;

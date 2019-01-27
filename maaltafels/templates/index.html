@@ -1,150 +1,88 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
+{% extends "main.html" %}
+{% block content %}
+<div id="selection">
+  <h1>Kies de tafels die je wilt oefenen...</h1>
+  
+  <br>
+  
+  <button type="button" class="btn btn-outline-secondary choice 2" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="2">2</button>
+  <button type="button" class="btn btn-outline-secondary choice 3" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="3">3</button>
+  <button type="button" class="btn btn-outline-secondary choice 4" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="4">4</button>
 
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
-    <link rel="stylesheet" href="/media/maaltafels.css?{{ version }}">
-    <script>__version__ = "{{ version }}";</script>
-    <title>Maaltafels</title>
+  <br>
+  
+  <button type="button" class="btn btn-outline-secondary choice 5" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="5">5</button>
+  <button type="button" class="btn btn-outline-secondary choice 6" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="6">6</button>
+  <button type="button" class="btn btn-outline-secondary choice 7" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="7">7</button>
 
-    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/media/favicons/apple-touch-icon-57x57.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/media/favicons/apple-touch-icon-114x114.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/media/favicons/apple-touch-icon-72x72.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/media/favicons/apple-touch-icon-144x144.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/media/favicons/apple-touch-icon-60x60.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/media/favicons/apple-touch-icon-120x120.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/media/favicons/apple-touch-icon-76x76.png" />
-    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/media/favicons/apple-touch-icon-152x152.png" />
-    <link rel="icon" type="image/png" href="/media/favicons/favicon-196x196.png" sizes="196x196" />
-    <link rel="icon" type="image/png" href="/media/favicons/favicon-96x96.png" sizes="96x96" />
-    <link rel="icon" type="image/png" href="/media/favicons/favicon-32x32.png" sizes="32x32" />
-    <link rel="icon" type="image/png" href="/media/favicons/favicon-16x16.png" sizes="16x16" />
-    <link rel="icon" type="image/png" href="/media/favicons/favicon-128.png" sizes="128x128" />
-    <meta name="application-name" content="Maaltafels"/>
-    <meta name="msapplication-TileColor" content="#FFFFFF" />
-    <meta name="msapplication-TileImage" content="/media/favicons/mstile-144x144.png" />
-    <meta name="msapplication-square70x70logo" content="/media/favicons/mstile-70x70.png" />
-    <meta name="msapplication-square150x150logo" content="/media/favicons/mstile-150x150.png" />
-    <meta name="msapplication-wide310x150logo" content="/media/favicons/mstile-310x150.png" />
-    <meta name="msapplication-square310x310logo" content="/media/favicons/mstile-310x310.png" />
+  <br>
 
-  </head>
-  <body>
-    
-    <div class="main">
-      <div class="wrapper">
-        <div id="app">
+  <button type="button" class="btn btn-outline-secondary choice 8" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="8">8</button>
+  <button type="button" class="btn btn-outline-secondary choice 9" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="9">9</button>
+  <button type="button" class="btn btn-outline-secondary choice 10" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="10">10</button>
 
-          <div id="selection">
-            <h1>Kies de tafels die je wilt oefenen...</h1>
-            
-            <br>
-            
-            <button type="button" class="btn btn-outline-secondary choice 2" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="2">2</button>
-            <button type="button" class="btn btn-outline-secondary choice 3" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="3">3</button>
-            <button type="button" class="btn btn-outline-secondary choice 4" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="4">4</button>
+  <br><br><br>
 
-            <br>
-            
-            <button type="button" class="btn btn-outline-secondary choice 5" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="5">5</button>
-            <button type="button" class="btn btn-outline-secondary choice 6" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="6">6</button>
-            <button type="button" class="btn btn-outline-secondary choice 7" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="7">7</button>
+  <button type="button" class="btn btn-success start">Start...</button>
+</div>
 
-            <br>
+<div id="countdown">
+  <div class="count digit 3">3</div>
+  <div class="count digit 2">2</div>
+  <div class="count digit 1">1</div>
+</div>
 
-            <button type="button" class="btn btn-outline-secondary choice 8" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="8">8</button>
-            <button type="button" class="btn btn-outline-secondary choice 9" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="9">9</button>
-            <button type="button" class="btn btn-outline-secondary choice 10" data-toggle="button" aria-pressed="false" autocomplete="off" data-choice="10">10</button>
+<div id="test">
+  <div class="question">
+    <div class="left argument">&nbsp;</div>
+    <div class="operator">&nbsp;</div>
+    <div class="right argument">&nbsp;</div>
+    <div class="equals">=</div>
+    <div class="answer">&nbsp;</div>
+  </div>
 
-            <br><br><br>
+  <div class="actions">
+    <button type="button" class="btn btn-outline-secondary digit 1" data-digit="1">1</button>
+    <button type="button" class="btn btn-outline-secondary digit 2" data-digit="2">2</button>
+    <button type="button" class="btn btn-outline-secondary digit 3" data-digit="3">3</button>
 
-            <button type="button" class="btn btn-success start">Start...</button>
-          </div>
+    <br>
 
-          <div id="countdown">
-            <div class="count digit 3">3</div>
-            <div class="count digit 2">2</div>
-            <div class="count digit 1">1</div>
-          </div>
+    <button type="button" class="btn btn-outline-secondary digit 4" data-digit="4">4</button>
+    <button type="button" class="btn btn-outline-secondary digit 5" data-digit="5">5</button>
+    <button type="button" class="btn btn-outline-secondary digit 6" data-digit="6">6</button>
 
-          <div id="test">
-            <div class="question">
-              <div class="left argument">&nbsp;</div>
-              <div class="operator">&nbsp;</div>
-              <div class="right argument">&nbsp;</div>
-              <div class="equals">=</div>
-              <div class="answer">&nbsp;</div>
-            </div>
+    <br>
 
-            <div class="actions">
-              <button type="button" class="btn btn-outline-secondary digit 1" data-digit="1">1</button>
-              <button type="button" class="btn btn-outline-secondary digit 2" data-digit="2">2</button>
-              <button type="button" class="btn btn-outline-secondary digit 3" data-digit="3">3</button>
+    <button type="button" class="btn btn-outline-secondary digit 7" data-digit="7">7</button>
+    <button type="button" class="btn btn-outline-secondary digit 8" data-digit="8">8</button>
+    <button type="button" class="btn btn-outline-secondary digit 9" data-digit="9">9</button>
 
-              <br>
+    <br>
 
-              <button type="button" class="btn btn-outline-secondary digit 4" data-digit="4">4</button>
-              <button type="button" class="btn btn-outline-secondary digit 5" data-digit="5">5</button>
-              <button type="button" class="btn btn-outline-secondary digit 6" data-digit="6">6</button>
+    <button type="button" class="btn btn-warning undo">&lt;</button>
+    <button type="button" class="btn btn-outline-secondary digit 0" data-digit="0">0</button>
+    <button type="button" class="btn btn-success ok">OK</button>
 
-              <br>
+    <br>
 
-              <button type="button" class="btn btn-outline-secondary digit 7" data-digit="7">7</button>
-              <button type="button" class="btn btn-outline-secondary digit 8" data-digit="8">8</button>
-              <button type="button" class="btn btn-outline-secondary digit 9" data-digit="9">9</button>
+    <button type="button" class="btn btn-danger stop">Stop</button>
+  </div>
+</div>
 
-              <br>
-
-              <button type="button" class="btn btn-warning undo">&lt;</button>
-              <button type="button" class="btn btn-outline-secondary digit 0" data-digit="0">0</button>
-              <button type="button" class="btn btn-success ok">OK</button>
-
-              <br>
-
-              <button type="button" class="btn btn-danger stop">Stop</button>
-            </div>
-          </div>
-
-          <div id="feedback">
-            <div class="results">
-              Score: <span class="correct"></span>/<span class="total"></span><br>
-              Tijd: <span class="average"></span>s<br>
-              <div class="evolution">
-                <canvas id="evolution" width="200" height="100"></canvas>
-              </div>
-            </div>
-            <div class="actions">
-              <button type="button" class="btn btn-success ok">OK</button>
-            </div>
-          </div>
-        </div>        
-      </div>
-    </div>
-
-    <div id="dialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">&nbsp;</h5>
-          </div>
-          <div class="modal-body">&nbsp;</div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-success ok"  data-dismiss="modal">OK</button>
-            <button type="button" class="btn btn-success yes" data-dismiss="modal">Ja</button>
-            <button type="button" class="btn btn-danger  no"  data-dismiss="modal">Nee</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
-
+<div id="feedback">
+  <div class="results">
+    Goed geoefend! Je maakte <span class="total"></span> oefeningen en had er <span class="correct"></span> juist!<br>
+    Je deed gemiddeld <span class="average"></span> seconden per oefening.<br>
+  </div>
+  <div class="chart evolution">
+    <canvas id="evolution" width="200" height="100"></canvas>
+  </div>
+  <div class="actions">
+    <button type="button" class="btn btn-success ok">OK</button>
+  </div>
+</div>
+{% endblock %}
+{% block more_js %}
     <script src="/media/maaltafels.js?{{ version }}"></script>
-  </body>
-</html>
+{% endblock %}

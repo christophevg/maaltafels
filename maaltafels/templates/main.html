@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, user-scalable=no" />
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" href="/media/maaltafels.css?{{ version }}">
+    <script>__version__ = "{{ version }}";</script>
+    <title>Maaltafels</title>
+
+    <link rel="apple-touch-icon-precomposed" sizes="57x57" href="/media/favicons/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="/media/favicons/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="/media/favicons/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/media/favicons/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="60x60" href="/media/favicons/apple-touch-icon-60x60.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="120x120" href="/media/favicons/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="76x76" href="/media/favicons/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon-precomposed" sizes="152x152" href="/media/favicons/apple-touch-icon-152x152.png" />
+    <link rel="icon" type="image/png" href="/media/favicons/favicon-196x196.png" sizes="196x196" />
+    <link rel="icon" type="image/png" href="/media/favicons/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/png" href="/media/favicons/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="/media/favicons/favicon-16x16.png" sizes="16x16" />
+    <link rel="icon" type="image/png" href="/media/favicons/favicon-128.png" sizes="128x128" />
+    <meta name="application-name" content="Maaltafels"/>
+    <meta name="msapplication-TileColor" content="#FFFFFF" />
+    <meta name="msapplication-TileImage" content="/media/favicons/mstile-144x144.png" />
+    <meta name="msapplication-square70x70logo" content="/media/favicons/mstile-70x70.png" />
+    <meta name="msapplication-square150x150logo" content="/media/favicons/mstile-150x150.png" />
+    <meta name="msapplication-wide310x150logo" content="/media/favicons/mstile-310x150.png" />
+    <meta name="msapplication-square310x310logo" content="/media/favicons/mstile-310x310.png" />
+
+  </head>
+  <body>
+    
+    <div class="main">
+      <div class="wrapper">
+        <div id="app">
+          {% block content %}{% endblock %}
+        </div>
+      </div>
+    </div>
+
+    <div id="dialog" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">&nbsp;</h5>
+          </div>
+          <div class="modal-body">&nbsp;</div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-success ok"  data-dismiss="modal">OK</button>
+            <button type="button" class="btn btn-success yes" data-dismiss="modal">Ja</button>
+            <button type="button" class="btn btn-danger  no"  data-dismiss="modal">Nee</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js"></script>
+
+    {% block more_js %}{% endblock %}
+  </body>
+</html>
