@@ -95,7 +95,6 @@
       "tables" : session.tables
     }, function(response) { 
       session.id = response;
-      console.log("session started with id " + session.id)
     });
     countdown(function() {
       $("div.answer").html("&nbsp;");
@@ -341,7 +340,6 @@
       dataType: "json",
       contentType: "application/json",
       success: function(response) {
-        // console.log("posted", resource, doc, response);
         if(callback) { callback(response); }
       },
       error: function(response) {
