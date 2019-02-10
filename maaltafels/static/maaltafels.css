@@ -97,13 +97,14 @@ DIV.sessions .table {
 
 DIV.sessions .table .cell {
   display: inline-block;
-  width: 100px;
+  width: 200px;
   margin: 2px;
   padding: 2px;
   background-color: #eee;
 }
 
 DIV.sessions .table .header.cell {
+  width: 100px;
   text-align: center;
   background-color: #ccc;
 }

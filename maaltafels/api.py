@@ -87,7 +87,7 @@ class Sessions(Resource):
       "start": 1,
       "tables": 1,
       "_id" : 0
-    }).sort( [("start", -1)] ).limit(7)
+    }).sort( [("start", -1)] ).limit(10)
   ]
 
   @authenticated
