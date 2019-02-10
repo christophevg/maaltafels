@@ -82,6 +82,15 @@ api.add_resource(Results, "/api/results")
 
 class Sessions(Resource):
   @authenticated
+  def get(self, id=None):
+    return [ result for result in db.sessions.find( {}, {
+      "start": 1,
+      "tables": 1,
+      "_id" : 0
+    }).sort( [("start", -1)] ).limit(7)
+  ]
+
+  @authenticated
   def post(self, id=None):
     session = request.get_json()
     session["_ts_start"] = datetime.datetime.utcnow()

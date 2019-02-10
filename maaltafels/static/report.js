@@ -150,6 +150,20 @@
     });
   }
   
+  function render_sessions() {
+    $.getJSON( "/api/sessions", function(data) {
+      var sessions = "";
+      for(var i in data) {
+        var d = new Date(data[i]["start"]),
+            w = d.getDate()+"/"+(d.getMonth()+1)+" " +d.getHours()+":"+d.getMinutes();
+        sessions += "<div class='header cell'>" + w + "</div>" +
+                    "<div class='cell'>" + data[i]["tables"].join(", ") + "</div>";
+      }
+      $(".sessions .table").html(sessions);
+    });
+  }
+
   render_evolution();
   render_coverage();
+  render_sessions();
 })();

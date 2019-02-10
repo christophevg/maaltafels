@@ -82,9 +82,30 @@ DIV.chart {
 }
 
 DIV.chart.coverage {
-  display: inline-block;
   width: 500px;
+}
+
+DIV.sessions {
+  vertical-align: top;
+  display: inline-block;
+  margin-left: 15px;
+}
+
+DIV.sessions .table {
+  width: 300px;
+}
+
+DIV.sessions .table .cell {
+  display: inline-block;
+  width: 100px;
+  margin: 2px;
+  padding: 2px;
+  background-color: #eee;
+}
+
+DIV.sessions .table .header.cell {
   text-align: center;
+  background-color: #ccc;
 }
 
 canvas {
