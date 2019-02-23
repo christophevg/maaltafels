@@ -161,6 +161,7 @@
             h = ("0" + s.getHours()).slice(-2),
             m = ("0" + s.getMinutes()).slice(-2),
         w = s.getDate()+"/"+(s.getMonth()+1)+" " + h + ":" + m;
+        if(isNaN(d)) { d = "?" };
         sessions += "<div class='header cell'>" + w + " ("+ d + "/"+ r + "m)"+ "</div>" +
                     "<div class='cell'>" + data[i]["tables"].join(", ") + "</div>";
       }
