@@ -110,13 +110,17 @@
     });
   }
 
-  function end_session() {
+  function update_session() {
     put("sessions/"+session.id, {
       "correct": session.correct,
       "total": session.asked.length,
       "time": session.time,
       "end": new Date()
-    });
+    });    
+  }
+
+  function end_session() {
+    update_session();
     end_timer();
     $("div#test").hide();
     show_feedback();
@@ -325,6 +329,7 @@
       "time"     : current.time,
       "session"  : session.id
     });
+    update_session();
   });
 
   // stop the test and log session results
