@@ -157,10 +157,11 @@
         var s = new Date(data[i]["start"]),
             e = new Date(data[i]["end"]),
             d = Math.round((e-s) / 60000),
+            r = data[i]["duration"] || 0,
             h = ("0" + s.getHours()).slice(-2),
             m = ("0" + s.getMinutes()).slice(-2),
         w = s.getDate()+"/"+(s.getMonth()+1)+" " + h + ":" + m;
-        sessions += "<div class='header cell'>" + w + " ("+ d + "/"+ data[i]["duration"] + "m)"+ "</div>" +
+        sessions += "<div class='header cell'>" + w + " ("+ d + "/"+ r + "m)"+ "</div>" +
                     "<div class='cell'>" + data[i]["tables"].join(", ") + "</div>";
       }
       $(".sessions .table").html(sessions);
