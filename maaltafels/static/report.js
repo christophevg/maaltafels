@@ -154,9 +154,13 @@
     $.getJSON( "/api/sessions", function(data) {
       var sessions = "";
       for(var i in data) {
-        var d = new Date(data[i]["start"]),
-            w = d.getDate()+"/"+(d.getMonth()+1)+" " +d.getHours()+":"+d.getMinutes();
-        sessions += "<div class='header cell'>" + w + "</div>" +
+        var s = new Date(data[i]["start"]),
+            e = new Date(data[i]["end"]),
+            d = Math.round((e-s) / 60000),
+            h = ("0" + s.getHours()).slice(-2),
+            m = ("0" + s.getMinutes()).slice(-2),
+        w = s.getDate()+"/"+(s.getMonth()+1)+" " + h + ":" + m;
+        sessions += "<div class='header cell'>" + w + " ("+ d + "/"+ data[i]["duration"] + "m)"+ "</div>" +
                     "<div class='cell'>" + data[i]["tables"].join(", ") + "</div>";
       }
       $(".sessions .table").html(sessions);

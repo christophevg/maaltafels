@@ -15,6 +15,7 @@
   //       include in the test
 
   function show_selection() {
+    $("#duration").val(0);
     $("div#selection").show();
     check_version();
   }
@@ -74,31 +75,35 @@
   // View: test, generates exercise, accepts answer, gives feedback and reports
 
   var session = {
-    "id"     : null, // unique reference for the current session
-    "tables" : [],   // tables to choose from
-    "start"  : 0,    // started at
-    "end"    : 0,    // ended at
-    "asked"  : [],   // questions asked
-    "correct": 0,    // correct questions
-    "time"   : 0     // total (active) time
+    "id"       : null, // unique reference for the current session
+    "tables"   : [],   // tables to choose from
+    "start"    : 0,    // started at
+    "end"      : 0,    // ended at
+    "asked"    : [],   // questions asked
+    "correct"  : 0,    // correct questions
+    "time"     : 0,    // total (active) time
+    "duration" : 0     // expected duration of session
   };
   
   var current = null; // current question
 
   function start_session(tables) {
-    session.tables  = tables;
-    session.start   = new Date();
-    session.end     = 0;
-    session.asked   = [];
-    session.correct = 0;
-    session.time    = 0;
+    session.tables   = tables;
+    session.start    = new Date();
+    session.end      = 0;
+    session.asked    = [];
+    session.correct  = 0;
+    session.time     = 0;
+    session.duration = $("#duration").val();
     post("sessions", {
-      "start"  : session.start,
-      "tables" : session.tables
+      "start"    : session.start,
+      "tables"   : session.tables,
+      "duration" : session.duration
     }, function(response) { 
       session.id = response;
     });
     countdown(function() {
+      if(session.duration > 0) { start_timer(session.duration * 60); }
       $("div.answer").html("&nbsp;");
       $("div#test").show();
       ask_question();
@@ -112,6 +117,7 @@
       "time": session.time,
       "end": new Date()
     });
+    end_timer();
     $("div#test").hide();
     show_feedback();
   }
@@ -412,6 +418,30 @@
       }
     }
     return true;
+  }
+
+  // duration timer support
+
+  function start_timer(duration) {
+    $("#timer").show();
+    update_timer(duration, duration);
+  }
+
+  var timer = null;
+
+  function update_timer(remaining, total) {
+    $("#timer .bar").width((remaining/total*100.0)+"%");
+    if(remaining > 0) {
+      timer = setTimeout(function(){ update_timer(remaining-0.1, total)}, 100);
+    } else {
+      end_timer();
+    }
+  }
+
+  function end_timer() {
+    if(timer) { clearTimeout(timer); }
+    $("#timer").hide();
+    $("#timer .bar").width("100%");
   }
 
   // button helper functions

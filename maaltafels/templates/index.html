@@ -23,7 +23,18 @@
 
   <br><br><br>
 
-  <button type="button" class="btn btn-success start">Start...</button>
+  <div class="form">
+    <form class="form-inline center">
+      <button type="button" class="btn btn-success start">Start...</button>
+      <select class="custom-select" id="duration" style="width: 190px">
+        <option value="0" selected>Zonder tijd...</option>
+        <option value="1">1 minuut</option>
+        <option value="5">5 minuten</option>
+        <option value="10">10 minuten</option>
+        <option value="15">15 minuten</option>
+      </select>
+    <form>
+  </div>
 </div>
 
 <div id="countdown">
@@ -82,6 +93,9 @@
     <button type="button" class="btn btn-success ok">OK</button>
   </div>
 </div>
+
+<div id="timer"><div class="bar"></div></div>
+
 {% endblock %}
 {% block more_js %}
     <script src="/media/maaltafels.js?{{ version }}"></script>

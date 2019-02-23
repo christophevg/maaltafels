@@ -14,7 +14,7 @@ html, body {
   vertical-align: middle;
 }
 
-DIV#app {
+div#app {
   margin-left: 50px;
   margin-right: 50px;
 }
@@ -24,26 +24,26 @@ BUTTON.choice {
   margin: 15px;
 }
 
-DIV#selection {
+div#selection {
   text-align: center;
 }
 
-DIV#countdown {
+div#countdown {
   display:none;
   text-align: center;
 }
 
-DIV#countdown DIV.count {
+div#countdown div.count {
   display:none;
   font-size: 54pt;
 }
 
-DIV#test {
+div#test {
   display:none;
   text-align: center;
 }
 
-DIV.question DIV {
+div.question div {
   width: 80px;
   height: 50px;
   margin-right: 20px;
@@ -51,51 +51,51 @@ DIV.question DIV {
   font-size: 24pt;
 }
 
-DIV.answer {
+div.answer {
   background-color: #f8f9fa;
   text-align: center;
 }
 
-DIV.actions BUTTON {
+div.actions BUTTON {
   width: 75px;
   margin: 15px;
 }
 
-DIV#feedback {
+div#feedback {
   display: none;
   text-align: center;
 }
 
-DIV#feedback DIV.results {
+div#feedback div.results {
   font-size: 18pt;
   margin-bottom: 25px;
 }
 
-DIV#feedback DIV.results SPAN {
+div#feedback div.results SPAN {
   font-weight: bold;
 }
 
-DIV.chart {
+div.chart {
   display: inline-block;
   width: 800px;
   text-align: center;
 }
 
-DIV.chart.coverage {
+div.chart.coverage {
   width: 500px;
 }
 
-DIV.sessions {
+div.sessions {
   vertical-align: top;
   display: inline-block;
   margin-left: 15px;
 }
 
-DIV.sessions .table {
-  width: 308px;
+div.sessions .table {
+  width: 358px;
 }
 
-DIV.sessions .table .cell {
+div.sessions .table .cell {
   display: inline-block;
   width: 200px;
   margin: 2px;
@@ -103,8 +103,8 @@ DIV.sessions .table .cell {
   background-color: #eee;
 }
 
-DIV.sessions .table .header.cell {
-  width: 100px;
+div.sessions .table .header.cell {
+  width: 150px;
   text-align: center;
   background-color: #ccc;
 }
@@ -156,4 +156,32 @@ canvas {
   background-repeat: no-repeat;
   height: 200px;
   padding-right: 110px;
+}
+
+/* duration timer */
+
+div.form {
+  display: inline-block;
+  width: 295px;
+}
+
+div.form FORM BUTTON {
+  margin-right: 25px;
+}
+
+div#timer {
+  display: none;
+  height: 20px;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  position: absolute;
+  left: 0px;
+  bottom: 0px;
+}
+
+div#timer div.bar {
+  width: 100%;
+  height: 20px;
+  background-color: #aaaaff;
 }

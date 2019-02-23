@@ -85,7 +85,9 @@ class Sessions(Resource):
   def get(self, id=None):
     return [ result for result in db.sessions.find( {}, {
       "start": 1,
+      "end" : 1,
       "tables": 1,
+      "duration" : 1,
       "_id" : 0
     }).sort( [("start", -1)] ).limit(10)
   ]
