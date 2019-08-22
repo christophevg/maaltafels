@@ -40,6 +40,11 @@ class Results(Resource):
   def get(self):
     return [result for result in db.results.aggregate([
       {
+        "$match": {
+          "_user" : request.authorization.username
+        }
+      },
+      {
         "$project": {
           "year"      : { "$year"      : "$_ts" },
           "month"     : { "$month"     : "$_ts" },
@@ -83,7 +88,9 @@ api.add_resource(Results, "/api/results")
 class Sessions(Resource):
   @authenticated
   def get(self, id=None):
-    return [ result for result in db.sessions.find( {}, {
+    return [ result for result in db.sessions.find( {
+      "_user": request.authorization.username
+    },{
       "start": 1,
       "end" : 1,
       "tables": 1,
@@ -103,7 +110,12 @@ class Sessions(Resource):
   def put(self, id):
     update = request.get_json()
     update["_ts_end"] = datetime.datetime.utcnow()
-    db.sessions.update_one({"_id" : ObjectId(id)}, {"$set" : update})
+    db.sessions.update_one({
+      "_id" : ObjectId(id),
+      "_user": request.authorization.username
+    },{
+      "$set" : update
+    })
 
 api.add_resource(Sessions,
   "/api/sessions",
@@ -123,6 +135,11 @@ class Coverage(Resource):
   @authenticated
   def get(self):
     return [ question for question in db.results.aggregate([
+      {
+        "$match": {
+          "_user" : request.authorization.username
+        }
+      },
       {
         "$group" : {
           "_id" : "$config",
