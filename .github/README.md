@@ -12,6 +12,13 @@
 
 [![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy)
 
-EN 
+en
 
-Configureer twee omgevingsvariabelen: `USERNAME` en `PASSWORD`.
+Maak een `users` collection aan, met een document per gebruiker. Bv.:
+
+```mongo
+> db.users.insertOne({"_id": "default", "pass" : "default"})
+{ "acknowledged" : true, "insertedId" : "default" }
+> db.users.find().pretty()
+{ "_id" : "default", "pass" : "default" }
+```
