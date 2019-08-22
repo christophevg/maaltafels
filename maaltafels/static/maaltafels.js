@@ -150,7 +150,7 @@
       var labels=[], wrong=[], correct=[], times=[];
       for(var i in data) {
         var d = new Date(data[i]._id);
-        labels.push(d.getDate()+"/"+d.getMonth()+1);
+        labels.push(d.getDate()+"/"+(d.getMonth()+1));
         wrong.push(data[i].questions-data[i].correct);
         correct.push(data[i].correct);
         times.push(Math.round(data[i].time/100)/10);
