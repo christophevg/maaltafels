@@ -3,7 +3,7 @@ tag:
 	git push --tags
 
 venv:
-	virtualenv -p python3 $@
+	virtualenv -p python3.7 $@
 
 requirements: venv requirements.txt
 	. venv/bin/activate; pip install -r requirements.txt > /dev/null
