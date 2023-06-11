@@ -3,7 +3,7 @@ import datetime
 from bson.objectid import ObjectId
 
 from flask import request, json, make_response
-from flask.json import JSONEncoder
+from json import JSONEncoder
 
 import flask_restful
 from flask_restful import Resource
