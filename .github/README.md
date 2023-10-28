@@ -2,6 +2,9 @@
 
 > Oefen maaltafels met opvolging.
 
+> [!IMPORTANT]  
+> Deze repo is [gearchiveerd](https://docs.github.com/en/repositories/archiving-a-github-repository/archiving-repositories#).
+
 ## Features
 
 - selectie maaltafels
