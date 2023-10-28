@@ -10,10 +10,10 @@ tag:
 requirements: .python-version requirements.txt
 	pip install -r requirements.txt
 
-upgrade: requirements
-	pip list --outdated --format=freeze | grep -v '^\-e' | cut -d = -f 1  | xargs -n1 pip install -U
+upgrade:
+	@pip list --outdated | tail +3 | cut -d " " -f 1 | xargs -n1 pip install -U
 
-run: requirements
+run:
 	gunicorn maaltafels:server
 
 .PHONY: dist docs
