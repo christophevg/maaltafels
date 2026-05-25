@@ -1,7 +1,8 @@
-from flask  import render_template
+from flask import render_template
 from jinja2 import TemplateNotFound
 
-from maaltafels import __version__, server, authenticated
+from maaltafels import __version__, authenticated, server
+
 
 def render(template, **kwargs):
   try:
@@ -9,10 +10,12 @@ def render(template, **kwargs):
   except TemplateNotFound:
     return render_template("404.html")
 
+
 @server.route("/")
 @authenticated
 def render_home():
   return render("index")
+
 
 @server.route("/report")
 @authenticated
