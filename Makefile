@@ -1,6 +1,6 @@
 -include ~/.claude/Makefile
 
-.PHONY: env-dev env-run install-pythons test test-cov test-all format lint typecheck check run docs docs-view build publish publish-test clean clean-all help
+.PHONY: env-dev env-run install-pythons test test-cov test-all format lint typecheck check run docs docs-view build publish publish-test clean clean-all upgrade help
 
 ## Environment
 
@@ -12,6 +12,9 @@ env-run: ## Install runtime dependencies only
 
 install-pythons: ## Install Python 3.11, 3.12
 	uv python install 3.11 3.12
+
+upgrade: ## Upgrade all dependencies to latest versions
+	uv lock --upgrade
 
 ## Testing
 
